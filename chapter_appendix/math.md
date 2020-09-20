@@ -91,7 +91,7 @@ $$
 \end{bmatrix}.
 $$
 
-我们使用符号$\odot$表示两个矩阵按元素做乘法的运算：
+我们使用符号$\odot$表示两个矩阵按元素乘法的运算，即阿达玛（Hadamard）积：
 
 $$
 \boldsymbol{A} \odot \boldsymbol{B} = 
@@ -269,9 +269,9 @@ $$\nabla_{\boldsymbol{X}} \|\boldsymbol{X} \|_F^2 = 2\boldsymbol{X}.$$
 
 
 
-### 黑塞矩阵
+### 海森矩阵
 
-假设函数$f: \mathbb{R}^n \rightarrow \mathbb{R}$的输入是一个$n$维向量$\boldsymbol{x} = [x_1, x_2, \ldots, x_n]^\top$，输出是标量。假定函数$f$所有的二阶偏导数都存在，$f$的黑塞矩阵$\boldsymbol{H}$是一个$n$行$n$列的矩阵：
+假设函数$f: \mathbb{R}^n \rightarrow \mathbb{R}$的输入是一个$n$维向量$\boldsymbol{x} = [x_1, x_2, \ldots, x_n]^\top$，输出是标量。假定函数$f$所有的二阶偏导数都存在，$f$的海森矩阵$\boldsymbol{H}$是一个$n$行$n$列的矩阵：
 
 $$
 \boldsymbol{H} = 
@@ -283,7 +283,7 @@ $$
 \end{bmatrix},
 $$
 
-其中二阶偏导数
+其中二阶偏导数为
 
 $$\frac{\partial^2 f}{\partial x_i \partial x_j} = \frac{\partial }{\partial x_j} \left(\frac{\partial f}{ \partial x_i}\right).$$
 
@@ -327,7 +327,7 @@ $$E(X) = \sum_{x} x P(X = x).$$
 
 ## 小结
 
-* 本节总结了本书中涉及的有关线性代数、微分和概率的基础知识。
+* 本附录总结了本书中涉及的有关线性代数、微分和概率的基础知识。
 
 
 ## 练习

@@ -291,7 +291,7 @@ def train(net, train_iter, valid_iter, num_epochs, lr, wd, ctx, lr_period,
         print(epoch_s + time_s + ', lr ' + str(trainer.learning_rate))
 ```
 
-## 训练并验证模型
+## 训练模型
 
 现在，我们可以训练并验证模型了。下面的超参数都是可以调节的，如增加迭代周期等。由于`lr_period`和`lr_decay`分别设为80和0.1，优化算法的学习率将在每80个迭代周期后自乘0.1。简单起见，这里仅训练1个迭代周期。
 
@@ -324,6 +324,7 @@ df.to_csv('submission.csv', index=False)
 ```
 
 执行完上述代码后，我们会得到一个submission.csv文件。这个文件符合Kaggle比赛要求的提交格式。提交结果的方法与[“实战Kaggle比赛：房价预测”](../chapter_deep-learning-basics/kaggle-house-price.md)一节中的类似。
+
 
 ## 小结
 

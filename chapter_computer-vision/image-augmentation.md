@@ -73,7 +73,7 @@ apply(img, shape_aug)
 
 ### 变化颜色
 
-另一类增广方法是变化颜色。我们可以从4个方面改变图像的颜色：亮度、对比度、饱和度和色调。在下面的例子里，我们将图像的亮度随机变化为原图亮度的$50\%$（$1-0.5$）$\sim 150\%$（$1+0.5$）。
+另一类增广方法是变化颜色。我们可以从4个方面改变图像的颜色：亮度、对比度、饱和度和色调。在下面的例子里，我们将图像的亮度随机变化为原图亮度的$50\%$（即$1-0.5$）$\sim 150\%$（即$1+0.5$）。
 
 ```{.python .input  n=28}
 apply(img, gdata.vision.transforms.RandomBrightness(0.5))
@@ -194,7 +194,6 @@ def train(train_iter, test_iter, net, loss, trainer, ctx, num_epochs):
         train_l_sum, train_acc_sum, n, m, start = 0.0, 0.0, 0, 0, time.time()
         for i, batch in enumerate(train_iter):
             Xs, ys, batch_size = _get_batch(batch, ctx)
-            ls = []
             with autograd.record():
                 y_hats = [net(X) for X in Xs]
                 ls = [loss(y_hat, y) for y_hat, y in zip(y_hats, ys)]
@@ -241,7 +240,7 @@ train_with_data_aug(flip_aug, no_aug)
 
 ## 练习
 
-* 不使用图像增广训练模型：`train_with_data_aug(no_aug, no_aug)`。比较有无图像增广时的训练和测试准确率。该对比实验是否能支持图像增广可以应对过拟合这一论断？为什么？
+* 不使用图像增广训练模型：`train_with_data_aug(no_aug, no_aug)`。比较有无图像增广时的训练准确率和测试准确率。该对比实验能否支持图像增广可以应对过拟合这一论断？为什么？
 * 在基于CIFAR-10数据集的模型训练中增加不同的图像增广方法。观察实现结果。
 * 查阅MXNet文档，Gluon的`transforms`模块还提供了哪些图像增广方法？
 

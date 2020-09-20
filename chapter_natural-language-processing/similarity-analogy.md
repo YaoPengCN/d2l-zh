@@ -4,7 +4,7 @@
 
 ## 使用预训练的词向量
 
-MXNet的`contrib.text`包提供了跟自然语言处理相关的函数和类（更多参见GluonNLP工具包 [1]）。下面查看它目前提供的预训练词嵌入的名称。
+MXNet的`contrib.text`包提供了与自然语言处理相关的函数和类（更多参见GluonNLP工具包 [1]）。下面查看它目前提供的预训练词嵌入的名称。
 
 ```{.python .input}
 from mxnet import nd
@@ -125,7 +125,7 @@ get_analogy('do', 'did', 'go', glove_6b50d)
 
 ## 练习
 
-* 测试一下fastText的结果。值得一提的是，fastText有预训练的中文词向量（pretrained_file_name='wiki.zh.vec'）。
+* 测试一下fastText的结果。值得一提的是，fastText有预训练的中文词向量（`pretrained_file_name='wiki.zh.vec'`）。
 * 如果词典特别大，如何提升近义词或类比词的搜索速度？
 
 

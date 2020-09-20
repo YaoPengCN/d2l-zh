@@ -156,7 +156,7 @@ $$\nabla f(\boldsymbol{x}) = \frac{1}{n} \sum_{i = 1}^n \nabla f_i(\boldsymbol{x
 
 $$\boldsymbol{x} \leftarrow \boldsymbol{x} - \eta \nabla f_i(\boldsymbol{x}).$$
 
-这里$\eta$同样是学习率。可以看到每次迭代的计算开销从梯度下降的$\mathcal{O}(n)$降到了常数$\mathcal{O}(1)$。值得强调的是，随机梯度$\nabla f_i(\boldsymbol{x})$是对梯度$\nabla f(\boldsymbol{x})$的无偏估计：
+这里$\eta$同样是学习率。可以看到，每次迭代的计算开销从梯度下降的$\mathcal{O}(n)$降到了常数$\mathcal{O}(1)$。值得强调的是，随机梯度$\nabla f_i(\boldsymbol{x})$是对梯度$\nabla f(\boldsymbol{x})$的无偏估计：
 
 $$E_i \nabla f_i(\boldsymbol{x}) = \frac{1}{n} \sum_{i = 1}^n \nabla f_i(\boldsymbol{x}) = \nabla f(\boldsymbol{x}).$$
 
@@ -187,7 +187,9 @@ show_trace_2d(f_2d, train_2d(sgd_2d))
 * 使用一个不同的目标函数，观察梯度下降和随机梯度下降中自变量的迭代轨迹。
 * 在二维梯度下降的实验中尝试使用不同的学习率，观察并分析实验现象。
 
+## 参考文献
 
+[1] Stewart, J. (2010). Calculus: early transcendentals. 7th ed. Cengage Learning.
 
 
 ## 扫码直达[讨论区](https://discuss.gluon.ai/t/topic/1877)

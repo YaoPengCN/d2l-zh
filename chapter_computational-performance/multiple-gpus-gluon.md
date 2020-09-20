@@ -100,7 +100,7 @@ def train(num_gpus, batch_size, lr):
             epoch + 1, train_time, test_acc))
 ```
 
-首先在单GPU上训练模型。
+首先在单块GPU上训练模型。
 
 ```{.python .input}
 train(num_gpus=1, batch_size=256, lr=0.1)
@@ -115,6 +115,7 @@ train(num_gpus=2, batch_size=512, lr=0.2)
 ## 小结
 
 * 在Gluon中，可以很方便地进行多GPU计算，例如，在多GPU及相应的显存上初始化模型参数和训练模型。
+
 
 ## 练习
 

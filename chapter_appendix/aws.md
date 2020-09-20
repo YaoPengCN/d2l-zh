@@ -1,6 +1,6 @@
 # 使用AWS运行代码
 
-当本地机器的计算资源有限时，可以通过云计算服务获取更强大的计算资源来运行本书中的深度学习代码。本节将介绍如何在AWS（亚马逊的云计算服务）上申请实例并通过Jupyter记事本运行代码。本节中的例子有如下两个步骤。
+当本地机器的计算资源有限时，可以通过云计算服务获取更强大的计算资源来运行本书中的深度学习代码。本节将介绍如何在AWS（亚马逊的云计算服务）上申请实例并通过Jupyter记事本运行代码。本附录中的例子有如下两个步骤。
 
 1. 申请含一个K80 GPU的p2.xlarge实例。
 2. 安装CUDA及相应GPU版本的MXNet。
@@ -60,15 +60,19 @@ ssh -i "/path/to/key.pem" ubuntu@ec2-xx-xxx-xxx-xxx.y.compute.amazonaws.com
 ![查看访问开启实例的方法。](../img/connect.png)
 
 
+为了使用GPU版本的MXNet，我们还需要在创建好的实例上安装CUDA（参考“安装CUDA”小节）。实际上，我们也可以直接创建已安装CUDA的实例，例如，在第一步“1. Choose AMI”中，选择“Deep Learning Base AMI (Ubuntu) Version XX.X”，并保持后面步骤不变。登录实例后，运行`cat README`命令查看实例上已安装的CUDA各版本（假设含9.0）。如果希望将CUDA的默认版本设为9.0，依次运行命令`sudo rm /usr/local/cuda`和`sudo ln -s /usr/local/cuda-9.0 /usr/local/cuda`。之后，即可跳过以下小节的CUDA安装步骤。
+
+
+
 ## 安装CUDA
 
-如果你登录的是一个GPU实例，需要下载并安装CUDA。首先，更新并安装编译需要的包：
+下面介绍CUDA的安装步骤。首先，更新并安装编译需要的包。
 
 ```
 sudo apt-get update && sudo apt-get install -y build-essential git libgfortran3
 ```
 
-NVIDIA一般每年会更新一次CUDA主版本。这里我们下载作者写本书时的最新主版本CUDA 9.0（也可使用MXNet支持的其他版本）。访问[NVIDIA官方网站](https://developer.nvidia.com/cuda-90-download-archive)获取正确版本的CUDA 9.0的下载地址，如图11.17所示。
+NVIDIA一般每年会更新一次CUDA主版本。这里我们下载CUDA 9.0（也可使用MXNet支持的其他版本）。访问[NVIDIA官方网站](https://developer.nvidia.com/cuda-90-download-archive)获取正确版本的CUDA 9.0的下载地址，如图11.17所示。
 
 ![获取CUDA 9.0的下载地址](../img/cuda.png)
 
@@ -81,7 +85,7 @@ wget https://developer.nvidia.com/compute/cuda/9.0/Prod/local_installers/cuda_9.
 sudo sh cuda_9.0.176_384.81_linux-run
 ```
 
-点击Ctrl+C跳出文档浏览，并回答以下几个问题。
+点击Ctrl+C跳出文档浏览，并回答以下几个问题：
 
 ```
 Do you accept the previously read EULA?
@@ -103,13 +107,13 @@ Install the CUDA 9.0 Samples?
 (y)es/(n)o/(q)uit: n
 ```
 
-当安装完成后，运行下面的命令就可以看到该实例的GPU了。
+当安装完成后，运行下面的命令就可以看到该实例的GPU了：
 
 ```
 nvidia-smi
 ```
 
-最后，将CUDA加入到库的路径中，以方便其他库找到它。如果使用其他版本或其他路径，需要修改以下命令中的字符串“/usr/local/cuda-9.0”。
+最后，将CUDA加入到库的路径中，以方便其他库找到它。如果使用其他版本或其他路径，需要修改以下命令中的字符串“/usr/local/cuda-9.0”：
 
 ```
 echo "export LD_LIBRARY_PATH=\${LD_LIBRARY_PATH}:/usr/local/cuda-9.0/lib64" >> ~/.bashrc
@@ -117,7 +121,7 @@ echo "export LD_LIBRARY_PATH=\${LD_LIBRARY_PATH}:/usr/local/cuda-9.0/lib64" >> ~
 
 ## 获取本书的代码并安装GPU版的MXNet
 
-我们已在[“获取和运行本书的代码”](../chapter_prerequisite/install.md)一节中介绍了Linux用户获取本书的代码并安装运行环境的方法。首先，安装Linux版的[Miniconda](https://conda.io/en/latest/miniconda.html)，例如
+我们已在[“获取和运行本书的代码”](../chapter_prerequisite/install.md)一节中介绍了Linux用户获取本书的代码并安装运行环境的方法。首先，安装Linux版的[Miniconda](https://conda.io/en/latest/miniconda.html)，例如：
 
 ```
 # 以Miniconda官方网站上的下载链接和安装文件名为准
@@ -125,21 +129,21 @@ wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
 sudo sh Miniconda3-latest-Linux-x86_64.sh
 ```
 
-这时需要回答下面几个问题。
+这时需要回答下面几个问题（如当conda版本为4.6.14时）:
 
 ```
 Do you accept the license terms? [yes|no]
 [no] >>> yes
-Do you wish the installer to prepend the Miniconda3 install location
-to PATH in your /home/ubuntu/.bashrc ? [yes|no]
+Do you wish the installer to initialize Miniconda3
+by running conda init? [yes|no]
 [no] >>> yes
 ```
 
-安装完成后，运行一次`source ~/.bashrc`让CUDA和conda生效。接下来，下载本书的代码，安装并激活conda环境。如未安装`unzip`，可运行命令`sudo apt install unzip`安装。
+安装完成后，运行一次`source ~/.bashrc`让CUDA和conda生效。接下来，下载本书的代码，安装并激活conda环境。（若未安装`unzip`，可运行命令`sudo apt install unzip`安装。）
 
 ```
 mkdir d2l-zh && cd d2l-zh
-curl https://zh.d2l.ai/d2l-zh-1.0.zip -o d2l-zh.zip
+curl https://zh.d2l.ai/d2l-zh-1.1.zip -o d2l-zh.zip
 unzip d2l-zh.zip && rm d2l-zh.zip
 conda env create -f environment.yml
 conda activate gluon
@@ -154,7 +158,7 @@ pip install mxnet-cu90==X.Y.Z  # X.Y.Z应替换为本书的代码依赖的版本
 
 ## 运行Jupyter记事本
 
-现在就可以运行Jupyter记事本了：
+现在就可以运行Jupyter记事本了。
 
 ```
 jupyter notebook

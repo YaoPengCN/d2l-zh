@@ -2,7 +2,7 @@
 
 机器翻译是指将一段文本从一种语言自动翻译到另一种语言。因为一段文本序列在不同语言中的长度不一定相同，所以我们使用机器翻译为例来介绍编码器—解码器和注意力机制的应用。
 
-## 读取和预处理数据
+## 读取和预处理数据集
 
 我们先定义一些特殊符号。其中“&lt;pad&gt;”（padding）符号用来添加在较短序列后，直到每个序列等长，而“&lt;bos&gt;”和“&lt;eos&gt;”符号分别表示序列的开始和结束。
 
@@ -289,10 +289,13 @@ def bleu(pred_tokens, label_tokens, k):
     len_pred, len_label = len(pred_tokens), len(label_tokens)
     score = math.exp(min(0, 1 - len_label / len_pred))
     for n in range(1, k + 1):
-        num_matches = 0
+        num_matches, label_subs = 0, collections.defaultdict(int)
+        for i in range(len_label - n + 1):
+            label_subs[''.join(label_tokens[i: i + n])] += 1
         for i in range(len_pred - n + 1):
-            if ' '.join(pred_tokens[i: i + n]) in ' '.join(label_tokens):
+            if label_subs[''.join(pred_tokens[i: i + n])] > 0:
                 num_matches += 1
+                label_subs[''.join(pred_tokens[i: i + n])] -= 1
         score *= math.pow(num_matches / (len_pred - n + 1), math.pow(0.5, n))
     return score
 ```
